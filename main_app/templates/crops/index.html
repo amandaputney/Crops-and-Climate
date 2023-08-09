@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Crop List</h1>
+
+{% for crop in crops %}
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">{{ crop.name }}</span>
+        <p>Regions: {{ crop.region }}</p>
+        <p>Yields: {{ crop.Yields }}</p>
+        <!-- {% if cat.age > 0 %}
+        <p>Age: {{ cat.age }}</p>
+        {% else %}
+        <p>Age: Kitten</p>
+        {% endif %} -->
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
