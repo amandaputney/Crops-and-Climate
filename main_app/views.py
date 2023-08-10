@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Import the Model
 from .models import Crop
 # crops= [
@@ -24,4 +25,16 @@ def crops_index(request):
 
 def crops_detail(request, crop_id):
   crop = Crop.objects.get(id=crop_id)
-  return render(request, 'crops/detail.html', { 'crop': crop })
+  return render(request, 'crops/detail.html', {'crop': crop })
+
+class CropCreate(CreateView):
+  model = Crop
+  fields = '__all__'
+
+class CropUpdate(UpdateView):
+  model = Crop
+  fields = '__all__'
+
+class CropDelete(DeleteView):
+  model = Crop
+  success_url = '/crops'

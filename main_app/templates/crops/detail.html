@@ -14,6 +14,10 @@
         <p>Description: {{ crop.description }}</p>
         <!-- <p>Description: {{ crop.description|linebreaks }}</p> -->
     </div>
+    <div class="card-action">
+        <a href="{% url 'crops_update' crop.id %}">Edit</a>
+        <a href="{% url 'crops_delete' crop.id %}">Delete</a>
+    </div>
 </div>
 
 {% endblock %}
