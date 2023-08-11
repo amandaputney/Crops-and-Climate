@@ -2,6 +2,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background-color: #FACFAD;
 }
 
 main {
@@ -14,5 +15,5 @@ footer.page-footer {
 }
 
 .nav-wrapper, .page-footer {
-    background-color: seagreen;
+    background-color: #3E4E50;
 }

@@ -36,7 +36,7 @@ class Reading(models.Model):
      max_length=2,
      choices=REGIONS, 
         default='G'
-        )
+  )
   author = models.CharField(max_length=200)
   title = models.CharField(max_length=200)
   source = models.CharField(max_length=200)
@@ -47,7 +47,7 @@ class Reading(models.Model):
     )
     
   def __str__(self):
-    return f'{self.get_meal_display()} on ({self.date})'
+    return f'{self.get_region_display()} on ({self.date})'
     
   class Meta:
     ordering = ['-date']
