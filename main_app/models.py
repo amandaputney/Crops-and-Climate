@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
+
 
 REGIONS = (
    ('G', 'Global'),
@@ -15,6 +17,18 @@ REGIONS = (
 )
 
 # Create your models here.
+class Impact(models.Model):
+  event = models.CharField(max_length=50)
+  description = models.TextField(max_length=300)
+  results = models.TextField(max_length=600)
+
+  def __str__(self):
+    return self.event
+
+  def get_absolute_url(self):
+    return reverse('impacts_detail', kwargs={'pk': self.id})
+
+
 class Crop(models.Model):
   name = models.CharField(max_length=100)
   scientific_name = models.CharField(max_length=100)
@@ -23,6 +37,8 @@ class Crop(models.Model):
   yields = models.CharField(max_length=100)
   acreage_of_production = models.CharField(max_length=100)
   description= models.TextField(max_length=999)
+    #creating a many to many relationship to impact
+  impacts = models.ManyToManyField(Impact) #toys is the related manager 
 
   def __str__(self):
     return f'{self.name} ({self.id})'

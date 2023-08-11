@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Impact List</h1>
+
+{% for impact in impact_list %}
+  <a href="{% url 'impacts_detail' impact.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ impact.event }}</span>
+            <p>Description: {{ impact.description}}</p>
+            <p>Result: {{ impact.results }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}
