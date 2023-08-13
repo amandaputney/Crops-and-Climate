@@ -46,6 +46,7 @@ class Crop(models.Model):
   def get_absolute_url(self):
       return reverse('detail', kwargs= {'crop_id':self.id})
   
+
 class Reading(models.Model):
   date = models.DateField('Date Published')
   region = models.CharField(
@@ -64,6 +65,15 @@ class Reading(models.Model):
     
   def __str__(self):
     return f'{self.get_region_display()} on ({self.date})'
-    
+
+
   class Meta:
     ordering = ['-date']
+
+
+class Photo(models.Model):
+  url = models.CharField(max_length=200)
+  crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f"Photo for crop_id: {self.crop_id} @{self.url}"

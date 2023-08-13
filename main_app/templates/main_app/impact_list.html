@@ -2,6 +2,7 @@
 {% block content %}
 
 <h1>Impact List</h1>
+<a href="{% url 'impacts_create' %}" class="btn">Add Impact</a>
 
 {% for impact in impact_list %}
   <a href="{% url 'impacts_detail' impact.id %}">
@@ -13,6 +14,5 @@
         </div>
     </div>
   </a>
-{% endfor %}
-
+  {% endfor %}
 {% endblock %}
