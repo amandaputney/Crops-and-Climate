@@ -28,18 +28,18 @@ def crops_index(request):
 
 def crops_detail(request, crop_id):
   crop = Crop.objects.get(id=crop_id)
-
     #list of crop impact does have
   id_list = crop.impacts.all().values_list('id')
 
 #query for the impacts that the crop doesn't have
 #by using the exclude method vs the filter method
-  impacts_crop_doesnt_have = Crop.objects.exclude(id__in=id_list)
+  impacts_crop_doesnt_have = Impact.objects.exclude(id__in=id_list)
 
   #instantiate reading form to be rendered in html
   reading_form = ReadingForm()
   return render(request, 'crops/detail.html', {
-    'crop': crop, 'reading_form': reading_form
+    'crop': crop, 'reading_form': reading_form,
+    'impacts': impacts_crop_doesnt_have
     })
 
 class CropCreate(CreateView):
@@ -89,6 +89,6 @@ def assoc_impact(request, crop_id, impact_id):
   Crop.objects.get(id=crop_id).impacts.add(impact_id)
   return redirect('detail', crop_id=crop_id)
 
-def unassoc_impact(request, crop_id, Impact_id):
+def unassoc_impact(request, crop_id, impact_id):
   Crop.objects.get(id=crop_id).impacts.remove(impact_id)
   return redirect('detail', crop_id=crop_id)

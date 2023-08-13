@@ -9,12 +9,12 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">{{ crop.name }}</span>
-                <p>Scientific Name: {{ crop.scientific_name }}</p>
-                <p>Classification: {{ crop.classification }}</p>
-                <p>Regions: {{ crop.regions }}</p>
-                <p>Yield: {{ crop.yields }}</p>
-                <p>Acreage of Global Production: {{ crop.acreage_of_production }}</p>
-                <p>Description: {{ crop.description }}</p>
+                <p><strong>Scientific Name:</strong> {{ crop.scientific_name |linebreaks}}</p>
+                <p><strong>Classification:</strong> {{ crop.classification |linebreaks}}</p>
+                <p><strong>Regions:</strong> {{ crop.regions|linebreaks }}</p>
+                <p><strong>Yield:</strong> {{ crop.yields |linebreaks}}</p>
+                <p><strong>Acreage of Global Production:</strong> {{ crop.acreage_of_production |linebreaks}}</p>
+                <p><strong>Description:</strong> {{ crop.description |linebreaks}}</p>
                 <!-- <p>Description: {{ crop.description|linebreaks }}</p> -->
             </div>
                 <div class="card-action">
@@ -24,20 +24,18 @@
         </div>
     </div>
 
-<!-------------------- CLIMATE IMPACTING CROP ------------------>
+<!-------------------- EVENT IMPACTING CROP ------------------>
 
     <div class="col s3">
         <h5>{{ crop.name }} affected by:</h5>
         {% if crop.impacts.count %}
         {% for impact in crop.impacts.all %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">
-                    <!-- A <span style="color: {{ toy.color }}">{{ toy.color }}</span> {{ impact.event }} -->
-                   <p>{{ impact.event }}</p> {{ impact.event }}
+        <div class="card"id="rounded">
+            <div class="card-content"id="rounded">
+                <span class="card-title"id="rounded">{{ impact.event }}
                 </span>
             </div>
-            <div class="card-action">
+            <div class="card-action"id="rounded">
                 <form action="{% url 'unassoc_impact' crop.id impact.id %}" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="btn">Remove</button>
@@ -54,13 +52,13 @@
         <h5>Potential Impact:</h5>
         {% if impacts.count %}
         {% for impact in impacts.all %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">
-                A <span style="color: {{ impact.event }} "></span>  {{ impact.event }}
-                </span>
-            </div>
-            <div class="card-action">
+    <div class="card" id="rounded">
+        <div class="card-content" id="rounded">
+            <span class="card-title" id="rounded">
+                {{ impact.event }}
+            </span>
+        </div>
+            <div class="card-action" id="rounded ">
                 <form action="{% url 'assoc_impact' crop.id impact.id %}" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="btn">Add</button>
@@ -79,7 +77,7 @@
    
 <div class="row">
     <div class="col s12">
-        <h4>Further Resources</h4>
+        <h4>Resources:</h4>
         <table class="striped">
                 <thead>
                 <tr>
@@ -87,7 +85,7 @@
                     <th>Region</th>
                     <th>Author</th>
                     <th>Title</th>
-                    <th>Source</th>
+                    <th>Source/URL</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,7 +95,7 @@
                     <td>{{reading.get_region_display}}</td>
                     <td>{{reading.author}}</td>
                     <td>{{reading.title}}</td>
-                <td> <a href="{{ reading.source }}" target=”_blank”>{{ reading.source }}</a></td>
+                <td> <a href="{{ reading.source }}">{{ reading.source }}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

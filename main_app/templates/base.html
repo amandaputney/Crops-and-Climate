@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Crop Collector</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
@@ -17,14 +20,14 @@
         <nav>
             <div class="nav-wrapper">
                 <ul>
-                    <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;Crop Collector</a></li>
+                    <li><a href="{% url 'home' %}" id="navbar" class="left brand-logo">&nbsp;&nbsp;Crop Collector</a></li>
                 </ul>
-                <ul class="right">
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'index' %}">View All Crops</a></li>
-                    <li><a href="{% url 'crops_create' %}">Add Crop</a></li>
-                    <li><a href="{% url 'impacts_index' %}">View All Climate Impact</a></li>
-                    <li><a href="{% url 'impacts_create' %}">Add Impact</a></li>
+                <ul class="right" id="navbar">
+                    <li><a href="{% url 'about' %}"id="navbar">About</a></li>
+                    <li><a href="{% url 'index' %}" id="navbar">View All Crops</a></li>
+                    <li><a href="{% url 'crops_create' %}" id="navbar">Add Crop</a></li>
+                    <li><a href="{% url 'impacts_index' %}" id="navbar">View All Climate Impact</a></li>
+                    <li><a href="{% url 'impacts_create' %}" id="navbar">Add Impact</a></li>
                 </ul>
             </div>
         </nav>

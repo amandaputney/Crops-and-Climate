@@ -1,8 +1,26 @@
+#rounded{
+    border-radius: 32% !important;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #CDD1C4;
+    }
+
+    #rounded > .card-action{
+        padding: 0;
+        background-color: transparent;
+        border-top: #CDD1C4;
+        vertical-align: middle;
+
+
+}
+
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    background-color: #FACFAD;
+    background-color: #5C80BC;
+    font-family: 'Bitter', serif;
 }
 
 main {
@@ -15,5 +33,27 @@ footer.page-footer {
 }
 
 .nav-wrapper, .page-footer {
-    background-color: #3E4E50;
+    background-color: #30323D;
+}
+
+.btn {
+    background-color: #E8C547 !important;
+    color: #30323D;
+}
+
+a {
+    color: #4D5061 !important;
+}
+
+label{
+    color: rgb(209, 203, 203) !important;
+    font-size: 1.5vmin;
+}
+
+#navbar{
+    color: white !important;
+}
+
+strong {
+    font-weight: bold;
 }
