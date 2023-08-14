@@ -46,7 +46,7 @@ a {
 }
 
 label{
-    color: rgb(209, 203, 203) !important;
+    color: rgb(250, 250, 250) !important;
     font-size: 1.5vmin;
 }
 
@@ -56,4 +56,8 @@ label{
 
 strong {
     font-weight: bold;
+}
+
+div.datepicker-date-display {
+    background-color: #8691a5 !important;
 }

@@ -10,6 +10,7 @@ urlpatterns = [
     path('crops/<int:pk>/update/', views.CropUpdate.as_view(), name='crops_update'),
     path('crops/<int:pk>/delete/', views.CropDelete.as_view(), name='crops_delete'),
     path('crops/<int:crop_id>/add_reading/', views.add_reading, name='add_reading'),
+    path('crops/<int:crop_id>/add_photo/', views.add_photo, name='add_photo'),
     path('crops/<int:crop_id>/assoc_impact/<int:impact_id>/', views.assoc_impact, name='assoc_impact'),
     path('crops/<int:crop_id>/unassoc_impact/<int:impact_id>/', views.unassoc_impact, name='unassoc_impact'),
     path('impacts/', views.ImpactList.as_view(), name='impacts_index'),

@@ -2,7 +2,7 @@
 {% block content %}
 
 <h1>Crop List</h1>
-
+<a href="{% url 'crops_create' %}" class="btn">Add Crop</a>
 {% for crop in crops %}
 <a href="{% url 'detail' crop.id %}">
 <div class="card">

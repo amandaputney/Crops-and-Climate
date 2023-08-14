@@ -1,8 +1,11 @@
+import uuid
+import boto3
+import os #access env vars
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 # Import the Model
-from .models import Crop, Impact
+from .models import Crop, Impact, Photo
 #import form
 from .forms import ReadingForm
 # crops= [
@@ -92,3 +95,21 @@ def assoc_impact(request, crop_id, impact_id):
 def unassoc_impact(request, crop_id, impact_id):
   Crop.objects.get(id=crop_id).impacts.remove(impact_id)
   return redirect('detail', crop_id=crop_id)
+
+def add_photo(request, crop_id):
+  #photo file maps to name attribute on the <input>
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    #need unique key with same file extension of the file that was upload i.e. .jpg
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try:
+     bucket = os.environ['S3_BUCKET']
+     s3.upload_fileobj(photo_file, bucket, key)
+     url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+     Photo.objects.create(url=url, crop_id=crop_id)
+    except Exception as e:
+      print('An error occured uploading file to S3')
+      print(e)
+  return redirect('detail', crop_id=crop_id)
+
