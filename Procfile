@@ -1,1 +1,1 @@
-web: python3.11 manage.py runserver 0.0.0.0:$PORT
+web: gunicorn cropcollector.wsgi --bind 0.0.0.0:$PORT
