@@ -18,4 +18,5 @@ urlpatterns = [
     path('impacts/create/', views.ImpactCreate.as_view(), name='impacts_create'),
     path('impacts/<int:pk>/update/', views.ImpactUpdate.as_view(), name='impacts_update'),
     path('impacts/<int:pk>/delete/', views.ImpactDelete.as_view(), name='impacts_delete'),
+    path('accounts/signup/', views.signup, name='signup'),
 ] 

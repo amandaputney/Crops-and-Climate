@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 
@@ -39,6 +40,9 @@ class Crop(models.Model):
   description= models.TextField(max_length=999)
     #creating a many to many relationship to impact
   impacts = models.ManyToManyField(Impact) #toys is the related manager 
+  #new FK key field (user_id FK column) for one to many relationship
+  user = models.ForeignKey(User, on_delete=models.CASCADE) #makes sure when user is deleted all assocated crops they created are deleted too
+
 
   def __str__(self):
     return f'{self.name} ({self.id})'

@@ -26,6 +26,12 @@
                     <li><a href="{% url 'about' %}"id="navbar">About</a></li>
                     <li><a href="{% url 'index' %}" id="navbar">View All Crops</a></li>
                     <li><a href="{% url 'impacts_index' %}" id="navbar">View All Climate Impact</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}" id="navbar">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" id="navbar">Log In</a></li>
+                        <li><a href="{% url 'signup' %}" id="navbar">Sign Up</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

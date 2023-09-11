@@ -4,15 +4,19 @@ import os #access env vars
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+#import decorators
+from django.contrib.auth.decorators import login_required
+# Import the mixin for class-based views
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Import the Model
 from .models import Crop, Impact, Photo
 #import form
 from .forms import ReadingForm
-# crops= [
-#   {'name': 'Wheat', 'regions': 'North America', 'yields': 'increase', 'acreage of production': 540000000 },
-#   {'name': 'Rice', 'regions': 'North America', 'yields': 'increase', 'acreage of production': 540000000 },
-#   {'name': 'Banana', 'regions': 'North America', 'yields': 'increase', 'acreage of production': 540000000 },
-# ]
+
 
 # Create your views here.
 def home(request):
@@ -22,13 +26,25 @@ def home(request):
 def about(request):
   return render(request, 'about.html')
 
+#for all users seeing all crops
+# def crops_index(request):
+#   crops = Crop.objects.all()
+#   # We pass data to a template very much like we did in Express!
+#   return render(request, 'crops/index.html', {
+#     'crops': crops
+#   })
+
+#for user seeing only crops they created
+@login_required
 def crops_index(request):
-  crops = Crop.objects.all()
+  crops = Crop.objects.filter(user=request.user)
   # We pass data to a template very much like we did in Express!
   return render(request, 'crops/index.html', {
     'crops': crops
   })
 
+
+@login_required
 def crops_detail(request, crop_id):
   crop = Crop.objects.get(id=crop_id)
     #list of crop impact does have
@@ -45,18 +61,32 @@ def crops_detail(request, crop_id):
     'impacts': impacts_crop_doesnt_have
     })
 
-class CropCreate(CreateView):
+
+class CropCreate(LoginRequiredMixin, CreateView):
+  model = Crop
+  fields =  ['name', 'scientific_name', 'classification', 'regions', 'yields', 'acreage_of_production', 'description']
+
+  def form_valid(self, form):
+    #form.instance represents unsaved crop instance and self.request.user
+    #represents logged in user
+    form.instance.user = self.request.user
+    #let the createview's form_valid method do its regular work
+    #of saving object and reedirecting
+    return super().form_valid(form)
+
+
+
+class CropUpdate(LoginRequiredMixin, UpdateView):
   model = Crop
   fields = '__all__'
 
-class CropUpdate(UpdateView):
-  model = Crop
-  fields = '__all__'
 
-class CropDelete(DeleteView):
+
+class CropDelete(LoginRequiredMixin, DeleteView):
   model = Crop
   success_url = '/crops'
 
+@login_required
 def add_reading(request, crop_id):
    #create a ModelForm instance using submitted form data 
    form = ReadingForm(request.POST)
@@ -76,26 +106,32 @@ class ImpactList(ListView):
 class ImpactDetail(DetailView):
   model = Impact
 
-class ImpactCreate(CreateView):
+
+class ImpactCreate(LoginRequiredMixin, CreateView):
   model = Impact
   fields = '__all__'
 
-class ImpactUpdate(UpdateView):
+
+class ImpactUpdate(LoginRequiredMixin, UpdateView):
   model = Impact
   fields = '__all__'
 
-class ImpactDelete(DeleteView):
+
+class ImpactDelete(LoginRequiredMixin, DeleteView):
   model = Impact
   success_url = '/impacts'
 
+@login_required
 def assoc_impact(request, crop_id, impact_id):
   Crop.objects.get(id=crop_id).impacts.add(impact_id)
   return redirect('detail', crop_id=crop_id)
 
+@login_required
 def unassoc_impact(request, crop_id, impact_id):
   Crop.objects.get(id=crop_id).impacts.remove(impact_id)
   return redirect('detail', crop_id=crop_id)
 
+@login_required
 def add_photo(request, crop_id):
   #photo file maps to name attribute on the <input>
   photo_file = request.FILES.get('photo-file', None)
@@ -112,4 +148,25 @@ def add_photo(request, crop_id):
       print('An error occured uploading file to S3')
       print(e)
   return redirect('detail', crop_id=crop_id)
+
+
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    #this is how we creat a 'user' form object
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      #save the user to the db
+      user = form.save()
+      #automatically log in the new user
+      #using login function that we imported at the top
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = "Invalid sign up, please try again."
+  #a bad POST or a GET request, render sign up template
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
+
 
