@@ -1,3 +1,5 @@
 __pycache__
 cropcollector/.env
 /staticfiles/
+venv 
+__pycache__/

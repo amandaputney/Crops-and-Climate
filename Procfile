@@ -1,1 +1,1 @@
-web: gunicorn cropcollector.wsgi --bind 0.0.0.0:$PORT
+web: gunicorn cropcollector.wsgi 
